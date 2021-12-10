@@ -22,8 +22,8 @@ class JobManager(BaseManager):
         for result in results:
             tasks.append({
                 'task_options': {
-                    'billing_year': result.get('billing_year'),
-                    'billing_month': result.get('billing_month')
+                    'billing_year': int(result['billing_year']),
+                    'billing_month': int(result['billing_month'])
                 }
             })
 

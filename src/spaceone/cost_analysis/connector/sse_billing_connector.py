@@ -63,6 +63,8 @@ class SSEBillingConnector(BaseConnector):
             'infra_type': 'AWS'
         }
 
+        _LOGGER.debug(f'[get_change_dates] {url} : {data}')
+
         response = requests.post(url, json=data, headers=self.headers)
 
         if response.status_code == 200:
@@ -79,6 +81,8 @@ class SSEBillingConnector(BaseConnector):
             'granularity': granularity
         }
 
+        _LOGGER.debug(f'[get_download_urls] {url} : {data}')
+
         response = requests.post(url, json=data, headers=self.headers)
         if response.status_code == 200:
             return response.json().get('signed_urls', [])
@@ -86,6 +90,8 @@ class SSEBillingConnector(BaseConnector):
             raise ERROR_CONNECTOR_CALL_API(reason=response.json())
 
     def get_cost_data(self, signed_url):
+        _LOGGER.debug(f'[get_cost_data] download url: {signed_url}')
+
         cost_csv = self._download_cost_data(signed_url)
         df = pd.read_csv(StringIO(cost_csv))
 
@@ -101,4 +107,5 @@ class SSEBillingConnector(BaseConnector):
     @staticmethod
     def _download_cost_data(signed_url: str) -> str:
         response = requests.get(signed_url)
-        return zlib.decompress(response.content, zlib.MAX_WBITS).decode('utf-8')
+        cost_bytes = zlib.decompress(response.content, zlib.MAX_WBITS|32)
+        return cost_bytes.decode('utf-8')

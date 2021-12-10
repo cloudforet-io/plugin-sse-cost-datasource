@@ -1,0 +1,5 @@
+spaceone-core
+spaceone-api
+schematics
+requests
+pandas

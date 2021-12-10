@@ -35,7 +35,8 @@ setup(
         'spaceone-api',
         'schematics',
         'requests',
-        'pandas'
+        'pandas',
+        'numpy'
     ],
     zip_safe=False,
 )

@@ -3,3 +3,4 @@ spaceone-api
 schematics
 requests
 pandas
+numpy

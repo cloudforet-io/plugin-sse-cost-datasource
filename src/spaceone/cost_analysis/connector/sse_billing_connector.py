@@ -2,6 +2,7 @@ import logging
 import time
 import requests
 import pandas as pd
+import numpy as np
 from io import StringIO
 import zlib
 
@@ -63,7 +64,7 @@ class SSEBillingConnector(BaseConnector):
             'infra_type': 'AWS'
         }
 
-        _LOGGER.debug(f'[get_change_dates] {url} : {data}')
+        _LOGGER.debug(f'[get_change_dates] {url} => {data}')
 
         response = requests.post(url, json=data, headers=self.headers)
 
@@ -81,7 +82,7 @@ class SSEBillingConnector(BaseConnector):
             'granularity': granularity
         }
 
-        _LOGGER.debug(f'[get_download_urls] {url} : {data}')
+        _LOGGER.debug(f'[get_download_urls] {url} => {data}')
 
         response = requests.post(url, json=data, headers=self.headers)
         if response.status_code == 200:
@@ -94,6 +95,7 @@ class SSEBillingConnector(BaseConnector):
 
         cost_csv = self._download_cost_data(signed_url)
         df = pd.read_csv(StringIO(cost_csv))
+        df = df.replace({np.nan: None})
 
         costs_data = df.to_dict('records')
 

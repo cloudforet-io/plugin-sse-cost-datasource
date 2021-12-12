@@ -109,5 +109,5 @@ class SSEBillingConnector(BaseConnector):
     @staticmethod
     def _download_cost_data(signed_url: str) -> str:
         response = requests.get(signed_url)
-        cost_bytes = zlib.decompress(response.content, zlib.MAX_WBITS|32)
+        cost_bytes = zlib.decompress(response.content, zlib.MAX_WBITS | 32)
         return cost_bytes.decode('utf-8')

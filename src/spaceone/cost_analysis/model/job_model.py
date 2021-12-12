@@ -1,5 +1,5 @@
 from schematics.models import Model
-from schematics.types import ListType, IntType
+from schematics.types import ListType, IntType, DateTimeType
 from schematics.types.compound import ModelType
 
 __all__ = ['Tasks']
@@ -16,3 +16,4 @@ class Task(Model):
 
 class Tasks(Model):
     tasks = ListType(ModelType(Task), required=True)
+    last_changed_at = DateTimeType(default=None)

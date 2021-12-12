@@ -39,6 +39,7 @@ class CostManager(BaseManager):
         for result in results:
             data = {
                 'cost': result['resource_cost'],
+                'currency': result.get('currency', 'USD'),
                 'provider': result['infra_type'],
                 'region_code': result.get('product_region'),
                 'product': result.get('product_name'),
@@ -57,10 +58,13 @@ class CostManager(BaseManager):
             if 'service_id' in result:
                 data['additional_info']['service_id'] = result['service_id']
 
-            cost_data = Cost(data)
-            cost_data.validate()
+            costs_data.append(data)
 
-            costs_data.append(cost_data.to_primitive())
+            # Excluded because schema validation is too slow
+            # cost_data = Cost(data)
+            # cost_data.validate()
+            #
+            # costs_data.append(cost_data.to_primitive())
 
         return costs_data
 

@@ -13,5 +13,9 @@ def TaskInfo(task_data):
     return job_pb2.TaskInfo(**info)
 
 
-def TasksInfo(tasks_data, **kwargs):
-    return job_pb2.TasksInfo(results=list(map(functools.partial(TaskInfo, **kwargs), tasks_data)))
+def TasksInfo(result, **kwargs):
+    tasks_data = result.get('tasks', [])
+    last_changed_at = result.get('last_changed_at')
+
+    return job_pb2.TasksInfo(tasks=list(map(functools.partial(TaskInfo, **kwargs), tasks_data)),
+                             last_changed_at=last_changed_at)

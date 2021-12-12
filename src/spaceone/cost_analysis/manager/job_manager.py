@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 
 from spaceone.core.manager import BaseManager
 from spaceone.cost_analysis.error import *
@@ -18,6 +19,15 @@ class JobManager(BaseManager):
         self.sse_connector.create_session(options, secret_data, schema)
         results = self.sse_connector.get_change_dates(start, end, last_synchronized_at)
 
+        if len(results) > 0:
+            first_year = results[0]['billing_year']
+            first_month = results[0]['billing_month']
+
+            last_changed_at = datetime.strptime(f'{first_year}-{first_month}', '%Y-%m')
+
+        else:
+            last_changed_at = None
+
         tasks = []
         for result in results:
             tasks.append({
@@ -27,6 +37,6 @@ class JobManager(BaseManager):
                 }
             })
 
-        tasks = Tasks({'tasks': tasks})
+        tasks = Tasks({'tasks': tasks, 'last_changed_at': last_changed_at})
         tasks.validate()
-        return tasks.to_primitive()['tasks']
+        return tasks.to_primitive()

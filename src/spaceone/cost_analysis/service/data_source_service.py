@@ -17,6 +17,7 @@ class DataSourceService(BaseService):
         super().__init__(*args, **kwargs)
         self.data_source_mgr: DataSourceManager = self.locator.get_manager('DataSourceManager')
 
+    @transaction
     @check_required(['options'])
     def init(self, params):
         """ init plugin by options

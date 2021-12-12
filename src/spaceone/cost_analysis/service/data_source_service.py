@@ -50,3 +50,9 @@ class DataSourceService(BaseService):
         Returns:
             None
         """
+
+        options = params['options']
+        secret_data = params['secret_data']
+        schema = params.get('schema')
+
+        return self.data_source_mgr.verify_plugin(options, secret_data, schema)

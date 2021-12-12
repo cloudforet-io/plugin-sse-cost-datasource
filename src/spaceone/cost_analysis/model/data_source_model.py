@@ -8,7 +8,6 @@ __all__ = ['PluginMetadata']
 _DEFAULT_DATA_SOURCE_RULES = [
     {
         'name': 'match_aws_service_account',
-        'order': 1,
         'conditions': [
             {
                 'key': 'provider',
@@ -29,7 +28,6 @@ _DEFAULT_DATA_SOURCE_RULES = [
     },
     {
         'name': 'match_google_cloud_service_account',
-        'order': 2,
         'conditions': [
             {
                 'key': 'provider',
@@ -50,7 +48,6 @@ _DEFAULT_DATA_SOURCE_RULES = [
     },
     {
         'name': 'match_azure_service_account',
-        'order': 1,
         'conditions': [
             {
                 'key': 'provider',
@@ -93,7 +90,6 @@ class Condition(Model):
 
 class DataSourceRule(Model):
     name = StringType(required=True)
-    order = IntType(required=True)
     conditions = ListType(ModelType(Condition), default=[])
     conditions_policy = StringType(required=True, choices=['ALL', 'ANY', 'ALWAYS'])
     actions = ModelType(Actions, required=True)

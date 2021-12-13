@@ -50,11 +50,12 @@ class SSEBillingConnector(BaseConnector):
         if 'endpoint' not in secret_data:
             raise ERROR_REQUIRED_PARAMETER(key='secret_data.endpoint')
 
-    def get_change_dates(self, start: datetime = None, end: datetime = None,
-                         last_synchronized_at: datetime = None) -> List[dict]:
+    def get_change_dates(self, start: datetime = None, last_synchronized_at: datetime = None) -> List[dict]:
         url = f'{self.endpoint}/v1/cost/change_date'
 
-        if last_synchronized_at:
+        if start:
+            last_sync_time = time.mktime(start.timetuple())
+        elif last_synchronized_at:
             last_sync_time = time.mktime(last_synchronized_at.timetuple())
         else:
             last_sync_time = 0

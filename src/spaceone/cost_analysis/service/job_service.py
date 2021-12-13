@@ -18,7 +18,7 @@ class JobService(BaseService):
 
     @transaction
     @check_required(['options', 'secret_data'])
-    @change_timestamp_value(['start', 'end', 'last_synchronized_at'], timestamp_format='iso8601')
+    @change_timestamp_value(['start', 'last_synchronized_at'], timestamp_format='iso8601')
     def get_tasks(self, params):
         """Get Job Tasks
 
@@ -28,7 +28,6 @@ class JobService(BaseService):
                 'secret_data': 'dict',
                 'schema': 'str',
                 'start': 'datetime',
-                'end': 'datetime',
                 'last_synchronized_at': 'datetime'
             }
 
@@ -41,7 +40,6 @@ class JobService(BaseService):
         secret_data = params['secret_data']
         schema = params.get('schema')
         start = params.get('start')
-        end = params.get('end')
         last_synchronized_at = params.get('last_synchronized_at')
 
-        return self.job_mgr.get_tasks(options, secret_data, schema, start, end, last_synchronized_at)
+        return self.job_mgr.get_tasks(options, secret_data, schema, start, last_synchronized_at)

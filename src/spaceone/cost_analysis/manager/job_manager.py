@@ -15,9 +15,9 @@ class JobManager(BaseManager):
         super().__init__(*args, **kwargs)
         self.sse_connector: SSEBillingConnector = self.locator.get_connector('SSEBillingConnector')
 
-    def get_tasks(self, options, secret_data, schema, start, end, last_synchronized_at):
+    def get_tasks(self, options, secret_data, schema, start, last_synchronized_at):
         self.sse_connector.create_session(options, secret_data, schema)
-        results = self.sse_connector.get_change_dates(start, end, last_synchronized_at)
+        results = self.sse_connector.get_change_dates(start, last_synchronized_at)
 
         if len(results) > 0:
             first_year = results[0]['billing_year']

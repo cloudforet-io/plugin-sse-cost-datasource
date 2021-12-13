@@ -9,6 +9,13 @@ from spaceone.cost_analysis.model.cost_model import Cost
 
 _LOGGER = logging.getLogger(__name__)
 
+_PROVIDER_MAP = {
+    'AWS': 'aws',
+    'AWS-China': 'aws',
+    'GCP': 'google_cloud',
+    'AZURE': 'azure'
+}
+
 
 class CostManager(BaseManager):
 
@@ -40,7 +47,7 @@ class CostManager(BaseManager):
             data = {
                 'cost': result['resource_cost'],
                 'currency': result.get('currency', 'USD'),
-                'provider': result['infra_type'],
+                'provider': _PROVIDER_MAP.get(result['infra_type'], result['infra_type']),
                 'region_code': result.get('product_region'),
                 'product': result.get('product_name'),
                 'account': str(result['account_id']),

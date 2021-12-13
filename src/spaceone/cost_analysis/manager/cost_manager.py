@@ -50,7 +50,7 @@ class CostManager(BaseManager):
                 'usage_quantity': result.get('usage_quantity', 0),
                 'provider': _PROVIDER_MAP.get(result['infra_type'], result['infra_type']),
                 'region_code': result.get('product_region'),
-                'product': result.get('product_name'),
+                'product': result.get('product_service_code'),
                 'account': str(result['account_id']),
                 'usage_type': result.get('usage_type'),
                 'resource': result.get('resource_id'),

@@ -12,6 +12,7 @@ class Cost(Model):
     region_code = StringType()
     product = StringType()
     account = StringType()
+    usage_type = StringType()
     resource = StringType()
     billed_at = DateTimeType(required=True)
     tags = DictType(StringType, default={})

@@ -60,8 +60,7 @@ class SSEBillingConnector(BaseConnector):
             last_sync_time = 0
 
         data = {
-            'last_sync_timestamp': last_sync_time,
-            'infra_type': 'AWS'
+            'last_sync_timestamp': last_sync_time
         }
 
         _LOGGER.debug(f'[get_change_dates] {url} => {data}')

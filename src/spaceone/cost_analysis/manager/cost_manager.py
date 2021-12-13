@@ -47,17 +47,16 @@ class CostManager(BaseManager):
             data = {
                 'cost': result['resource_cost'],
                 'currency': result.get('currency', 'USD'),
+                'usage_quantity': result.get('usage_quantity', 0),
                 'provider': _PROVIDER_MAP.get(result['infra_type'], result['infra_type']),
                 'region_code': result.get('product_region'),
                 'product': result.get('product_name'),
                 'account': str(result['account_id']),
+                'usage_type': result.get('usage_type'),
                 'resource': result.get('resource_id'),
                 'billed_at': datetime.strptime(result['usage_date'], '%Y-%m-%d'),
                 'additional_info': {}
             }
-
-            if 'currency' in result:
-                data['currency'] = result['currency']
 
             if 'category_name' in result:
                 data['additional_info']['category_name'] = result['category_name']

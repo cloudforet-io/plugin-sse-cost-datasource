@@ -16,7 +16,7 @@ def CostInfo(cost_data):
         'region_code': cost_data.get('region_code'),
         'product': cost_data.get('product'),
         'account': cost_data.get('account'),
-        'instance_type': cost_data.get('instance_type'),
+        'usage_type': cost_data.get('usage_type'),
         'resource_group': cost_data.get('resource_group'),
         'resource': cost_data.get('resource'),
         'tags': change_struct_type(cost_data['tags']) if 'tags' in cost_data else None,

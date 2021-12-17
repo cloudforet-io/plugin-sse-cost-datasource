@@ -20,6 +20,6 @@ Plugin for collecting SSE billing data
 </code>
 </pre>
 
-## Secret Data
+## Options
 Currently, not required.
 

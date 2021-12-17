@@ -44,6 +44,7 @@ class CostManager(BaseManager):
         costs_data = []
 
         for result in results:
+            _LOGGER.debug(f'[_make_cost_data] {result}')
             data = {
                 'cost': result['resource_cost'],
                 'currency': result.get('currency', 'USD'),

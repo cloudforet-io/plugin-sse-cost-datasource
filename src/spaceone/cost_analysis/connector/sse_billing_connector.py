@@ -74,7 +74,7 @@ class SSEBillingConnector(BaseConnector):
             raise ERROR_CONNECTOR_CALL_API(reason=response.json())
 
     def get_download_urls(self, billing_year: int, billing_month: int, granularity: str = 'DAILY') -> List[str]:
-        url = f'{self.endpoint}/v1/cost/download'
+        url = f'{self.endpoint}/v1/cost/summary/download'
 
         data = {
             'billing_year': billing_year,

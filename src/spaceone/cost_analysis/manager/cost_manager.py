@@ -53,16 +53,8 @@ class CostManager(BaseManager):
                 'product': result.get('product_service_code'),
                 'account': str(result['account_id']),
                 'usage_type': result.get('usage_type'),
-                'resource': result.get('resource_id'),
-                'billed_at': datetime.strptime(result['usage_date'], '%Y-%m-%d'),
-                'additional_info': {}
+                'billed_at': datetime.strptime(result['usage_date'], '%Y-%m-%d')
             }
-
-            if 'category_name' in result:
-                data['additional_info']['category_name'] = result['category_name']
-
-            if 'service_id' in result:
-                data['additional_info']['service_id'] = result['service_id']
 
             costs_data.append(data)
 

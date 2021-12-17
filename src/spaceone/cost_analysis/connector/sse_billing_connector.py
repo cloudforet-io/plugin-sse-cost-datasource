@@ -90,7 +90,8 @@ class SSEBillingConnector(BaseConnector):
             return response.json().get('signed_urls', [])
         else:
             _LOGGER.error(f'[get_download_urls] request error: {response.status_code}')
-            raise ERROR_CONNECTOR_CALL_API(reason=response.json())
+            # raise ERROR_CONNECTOR_CALL_API(reason=response.json())
+            raise ERROR_CONNECTOR_CALL_API(reason=str(response))
 
     def get_cost_data(self, signed_url):
         _LOGGER.debug(f'[get_cost_data] download url: {signed_url}')

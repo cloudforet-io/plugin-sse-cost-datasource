@@ -71,6 +71,7 @@ class SSEBillingConnector(BaseConnector):
         if response.status_code == 200:
             return response.json().get('results', [])
         else:
+            _LOGGER.error(f'[get_change_dates] request error: {response.status_code}')
             raise ERROR_CONNECTOR_CALL_API(reason=response.json())
 
     def get_download_urls(self, billing_year: int, billing_month: int, granularity: str = 'DAILY') -> List[str]:
@@ -88,6 +89,7 @@ class SSEBillingConnector(BaseConnector):
         if response.status_code == 200:
             return response.json().get('signed_urls', [])
         else:
+            _LOGGER.error(f'[get_download_urls] request error: {response.status_code}')
             raise ERROR_CONNECTOR_CALL_API(reason=response.json())
 
     def get_cost_data(self, signed_url):

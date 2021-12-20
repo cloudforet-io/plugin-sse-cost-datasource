@@ -99,3 +99,4 @@ class DataSourceRule(Model):
 
 class PluginMetadata(Model):
     data_source_rules = ListType(ModelType(DataSourceRule), default=_DEFAULT_DATA_SOURCE_RULES)
+    data_type = StringType(default='AGGREGATED', choices=['RAW', 'AGGREGATED'])

@@ -105,7 +105,6 @@ class SSEBillingConnector(BaseConnector):
         # Paginate
         page_count = int(len(costs_data) / _PAGE_SIZE) + 1
 
-        # Test 7
         for page_num in range(page_count):
             # Debug Code
             if page_num == 1:

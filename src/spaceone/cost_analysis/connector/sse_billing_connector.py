@@ -106,6 +106,8 @@ class SSEBillingConnector(BaseConnector):
         page_count = int(len(costs_data) / _PAGE_SIZE) + 1
 
         for page_num in range(page_count):
+            if page_num == 2:
+                break
             offset = _PAGE_SIZE * page_num
             yield costs_data[offset:offset + _PAGE_SIZE]
 

@@ -71,8 +71,14 @@ class SSEBillingConnector(BaseConnector):
         if response.status_code == 200:
             return response.json().get('results', [])
         else:
-            _LOGGER.error(f'[get_change_dates] request error: {response.status_code}')
-            raise ERROR_CONNECTOR_CALL_API(reason=response.json())
+            _LOGGER.error(f'[get_change_dates] error code: {response.status_code}')
+            try:
+                error_message = response.json()
+            except Exception as e:
+                error_message = str(response)
+
+            _LOGGER.error(f'[get_change_dates] error message: {error_message}')
+            raise ERROR_CONNECTOR_CALL_API(reason=error_message)
 
     def get_download_urls(self, billing_year: int, billing_month: int, granularity: str = 'DAILY') -> List[str]:
         url = f'{self.endpoint}/v1/cost/summary/download'
@@ -89,9 +95,14 @@ class SSEBillingConnector(BaseConnector):
         if response.status_code == 200:
             return response.json().get('signed_urls', [])
         else:
-            _LOGGER.error(f'[get_download_urls] request error: {response.status_code}')
-            raise ERROR_CONNECTOR_CALL_API(reason=response.json())
-            # raise ERROR_CONNECTOR_CALL_API(reason=str(response))
+            _LOGGER.error(f'[get_download_urls] error code: {response.status_code}')
+            try:
+                error_message = response.json()
+            except Exception as e:
+                error_message = str(response)
+
+            _LOGGER.error(f'[get_download_urls] error message: {error_message}')
+            raise ERROR_CONNECTOR_CALL_API(reason=error_message)
 
     def get_cost_data(self, signed_url):
         _LOGGER.debug(f'[get_cost_data] download url: {signed_url}')
@@ -106,10 +117,6 @@ class SSEBillingConnector(BaseConnector):
         page_count = int(len(costs_data) / _PAGE_SIZE) + 1
 
         for page_num in range(page_count):
-            # Debug Code
-            if page_num == 1:
-                break
-
             offset = _PAGE_SIZE * page_num
             yield costs_data[offset:offset + _PAGE_SIZE]
 

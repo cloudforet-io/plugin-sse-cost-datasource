@@ -108,7 +108,7 @@ class SSEBillingConnector(BaseConnector):
         # Test 4
         for page_num in range(page_count):
             # Debug Code
-            if page_num == 2:
+            if page_num == 1:
                 break
 
             offset = _PAGE_SIZE * page_num

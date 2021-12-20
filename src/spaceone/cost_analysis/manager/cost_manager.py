@@ -44,17 +44,21 @@ class CostManager(BaseManager):
         costs_data = []
 
         for result in results:
-            data = {
-                'cost': result['resource_cost'],
-                'currency': result.get('currency', 'USD'),
-                'usage_quantity': result.get('usage_quantity', 0),
-                'provider': _PROVIDER_MAP.get(result['infra_type'], result['infra_type']),
-                'region_code': result.get('product_region'),
-                'product': result.get('product_service_code'),
-                'account': str(result['account_id']),
-                'usage_type': result.get('usage_type'),
-                'billed_at': datetime.strptime(result['usage_date'], '%Y-%m-%d')
-            }
+            try:
+                data = {
+                    'cost': result['resource_cost'],
+                    'currency': result.get('currency', 'USD'),
+                    'usage_quantity': result.get('usage_quantity', 0),
+                    'provider': _PROVIDER_MAP.get(result['infra_type'], result['infra_type']),
+                    'region_code': result.get('product_region'),
+                    'product': result.get('product_service_code'),
+                    'account': str(result['account_id']),
+                    'usage_type': result.get('usage_type'),
+                    'billed_at': datetime.strptime(result['usage_date'], '%Y-%m-%d')
+                }
+            except Exception as e:
+                _LOGGER.error(f'[_make_cost_data] make data error: {e}', exc_info=True)
+                raise e
 
             costs_data.append(data)
 

@@ -28,6 +28,7 @@ class JobManager(BaseManager):
         else:
             last_changed_at = None
 
+        _LOGGER.debug(f'[get_tasks] tasks: {results}')
         tasks = []
         for result in results:
             tasks.append({

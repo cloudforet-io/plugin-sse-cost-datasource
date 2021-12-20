@@ -90,8 +90,8 @@ class SSEBillingConnector(BaseConnector):
             return response.json().get('signed_urls', [])
         else:
             _LOGGER.error(f'[get_download_urls] request error: {response.status_code}')
-            # raise ERROR_CONNECTOR_CALL_API(reason=response.json())
-            raise ERROR_CONNECTOR_CALL_API(reason=str(response))
+            raise ERROR_CONNECTOR_CALL_API(reason=response.json())
+            # raise ERROR_CONNECTOR_CALL_API(reason=str(response))
 
     def get_cost_data(self, signed_url):
         _LOGGER.debug(f'[get_cost_data] download url: {signed_url}')
@@ -106,13 +106,19 @@ class SSEBillingConnector(BaseConnector):
         page_count = int(len(costs_data) / _PAGE_SIZE) + 1
 
         for page_num in range(page_count):
+            # Debug Code
             if page_num == 2:
                 break
+
             offset = _PAGE_SIZE * page_num
             yield costs_data[offset:offset + _PAGE_SIZE]
 
     @staticmethod
     def _download_cost_data(signed_url: str) -> str:
-        response = requests.get(signed_url)
-        cost_bytes = zlib.decompress(response.content, zlib.MAX_WBITS | 32)
-        return cost_bytes.decode('utf-8')
+        try:
+            response = requests.get(signed_url)
+            cost_bytes = zlib.decompress(response.content, zlib.MAX_WBITS | 32)
+            return cost_bytes.decode('utf-8')
+        except Exception as e:
+            _LOGGER.error(f'[_download_cost_data] download error: {e}', exc_info=True)
+            raise e

@@ -84,8 +84,8 @@ class SSEBillingConnector(BaseConnector):
         url = f'{self.endpoint}/v1/cost/summary/download'
 
         data = {
-            'billing_year': billing_year,
-            'billing_month': billing_month,
+            'billing_year': int(billing_year),
+            'billing_month': int(billing_month),
             'granularity': granularity
         }
 
@@ -112,6 +112,8 @@ class SSEBillingConnector(BaseConnector):
         df = df.replace({np.nan: None})
 
         costs_data = df.to_dict('records')
+
+        _LOGGER.debug(f'[get_cost_data] costs count: {len(costs_data)}')
 
         # Paginate
         page_count = int(len(costs_data) / _PAGE_SIZE) + 1

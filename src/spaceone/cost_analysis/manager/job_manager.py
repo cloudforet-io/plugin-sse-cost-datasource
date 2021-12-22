@@ -42,5 +42,7 @@ class JobManager(BaseManager):
             })
 
         tasks = Tasks({'tasks': tasks, 'changed': changed})
+        _LOGGER.debug(f'[get_tasks] tasks: {tasks}')
+
         tasks.validate()
         return tasks.to_primitive()

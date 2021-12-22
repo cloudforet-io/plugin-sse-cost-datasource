@@ -22,6 +22,7 @@ def ChangedInfo(changed_data):
     if 'end' in changed_data:
         info['end'] = utils.datetime_to_iso8601(changed_data['end'])
 
+    print(f'>>>> {info}')
     return job_pb2.ChangedInfo(**info)
 
 

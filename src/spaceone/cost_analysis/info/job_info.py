@@ -16,13 +16,12 @@ def TaskInfo(task_data):
 
 def ChangedInfo(changed_data):
     info = {
-        'start': utils.datetime_to_iso8601(changed_data['start'])
+        'start': changed_data['start']
     }
 
     if 'end' in changed_data:
-        info['end'] = utils.datetime_to_iso8601(changed_data['end'])
+        info['end'] = changed_data['end']
 
-    print(f'>>>> {info}')
     return job_pb2.ChangedInfo(**info)
 
 

@@ -53,6 +53,8 @@ class SSEBillingConnector(BaseConnector):
     def get_change_dates(self, start: datetime = None, last_synchronized_at: datetime = None) -> List[dict]:
         url = f'{self.endpoint}/v1/cost/change_date'
 
+        return [{"billing_year": 2021, "billing_month": 10}, {"billing_year": 2021, "billing_month": 11}]
+
         if start:
             last_sync_time = time.mktime(start.timetuple())
         elif last_synchronized_at:

@@ -14,6 +14,11 @@ class Task(Model):
     task_options = ModelType(TaskOptions, required=True)
 
 
+class Changed(Model):
+    start = DateTimeType(required=True)
+    end = DateTimeType(default=None)
+
+
 class Tasks(Model):
     tasks = ListType(ModelType(Task), required=True)
-    last_changed_at = DateTimeType(default=None)
+    changed = ListType(ModelType(Changed), default=[])

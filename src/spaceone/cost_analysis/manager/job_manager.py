@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 from spaceone.core.manager import BaseManager
 from spaceone.cost_analysis.error import *
@@ -19,25 +20,27 @@ class JobManager(BaseManager):
         self.sse_connector.create_session(options, secret_data, schema)
         results = self.sse_connector.get_change_dates(start, last_synchronized_at)
 
-        if len(results) > 0:
-            first_year = results[0]['billing_year']
-            first_month = results[0]['billing_month']
-
-            last_changed_at = datetime.strptime(f'{first_year}-{first_month}', '%Y-%m')
-
-        else:
-            last_changed_at = None
-
         _LOGGER.debug(f'[get_tasks] tasks: {results}')
         tasks = []
+        changed = []
         for result in results:
+            year = result['billing_year']
+            month = result['billing_month']
             tasks.append({
                 'task_options': {
-                    'billing_year': int(result['billing_year']),
-                    'billing_month': int(result['billing_month'])
+                    'billing_year': int(year),
+                    'billing_month': int(month)
                 }
             })
 
-        tasks = Tasks({'tasks': tasks, 'last_changed_at': last_changed_at})
+            start = datetime.strptime(f'{year}-{month}', '%Y-%m')
+            end = start + relativedelta(months=1)
+
+            changed.append({
+                'start': start,
+                'end': end
+            })
+
+        tasks = Tasks({'tasks': tasks, 'changed': changed})
         tasks.validate()
         return tasks.to_primitive()

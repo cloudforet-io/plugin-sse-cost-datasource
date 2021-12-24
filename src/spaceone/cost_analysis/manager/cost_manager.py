@@ -11,9 +11,12 @@ _LOGGER = logging.getLogger(__name__)
 
 _PROVIDER_MAP = {
     'AWS': 'aws',
-    'AWS-China': 'aws',
+    'AWS-China': 'aws_china',
     'GCP': 'google_cloud',
-    'AZURE': 'azure'
+    'AZURE': 'azure',
+    'AZURE-China': 'azure_china',
+    'SPC': 'spc',
+    'IDC': 'idc',
 }
 
 

@@ -20,18 +20,22 @@ class JobManager(BaseManager):
         self.sse_connector.create_session(options, secret_data, schema)
         results = self.sse_connector.get_change_dates(start, last_synchronized_at)
 
-        _LOGGER.debug(f'[get_tasks] tasks: {results}')
+        _LOGGER.debug(f'[get_tasks] billing months: {results}')
         tasks = []
         changed = []
         for result in results:
-            year = result['billing_year']
-            month = result['billing_month']
-            tasks.append({
-                'task_options': {
-                    'billing_year': int(year),
-                    'billing_month': int(month)
-                }
-            })
+            year = int(result['billing_year'])
+            month = int(result['billing_month'])
+            signed_urls = self.sse_connector.get_download_urls(year, month)
+
+            for signed_url in signed_urls:
+                tasks.append({
+                    'task_options': {
+                        'billing_year': year,
+                        'billing_month': month,
+                        'signed_url': signed_url
+                    }
+                })
 
             start = datetime.strptime(f'{year}-{month}', '%Y-%m')
             end = start + relativedelta(months=1)

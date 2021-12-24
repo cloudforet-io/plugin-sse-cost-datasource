@@ -27,17 +27,11 @@ class CostManager(BaseManager):
         self.sse_connector.create_session(options, secret_data, schema)
         self._check_task_options(task_options)
 
-        billing_year = task_options['billing_year']
-        billing_month = task_options['billing_month']
+        signed_url = task_options['signed_url']
 
-        signed_urls = self.sse_connector.get_download_urls(billing_year, billing_month)
-        if len(signed_urls) > 0:
-            for signed_url in signed_urls:
-                response_stream = self.sse_connector.get_cost_data(signed_url)
-                for results in response_stream:
-                    yield self._make_cost_data(results)
-        else:
-            yield []
+        response_stream = self.sse_connector.get_cost_data(signed_url)
+        for results in response_stream:
+            yield self._make_cost_data(results)
 
     @staticmethod
     def _make_cost_data(results):

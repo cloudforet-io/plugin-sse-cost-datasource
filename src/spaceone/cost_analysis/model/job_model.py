@@ -1,11 +1,12 @@
 from schematics.models import Model
-from schematics.types import ListType, IntType, DateTimeType
+from schematics.types import ListType, IntType, DateTimeType, StringType
 from schematics.types.compound import ModelType
 
 __all__ = ['Tasks']
 
 
 class TaskOptions(Model):
+    signed_url = StringType(required=True)
     billing_year = IntType(required=True)
     billing_month = IntType(required=True)
 

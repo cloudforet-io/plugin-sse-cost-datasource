@@ -7,26 +7,6 @@ __all__ = ['PluginMetadata']
 
 _DEFAULT_DATA_SOURCE_RULES = [
     {
-        'name': 'match_aws_service_account',
-        'conditions': [
-            {
-                'key': 'provider',
-                'value': 'aws',
-                'operator': 'eq'
-            }
-        ],
-        'conditions_policy': 'ALL',
-        'actions': {
-            'match_service_account': {
-                'source': 'account',
-                'target': 'data.account_id'
-            }
-        },
-        'options': {
-            'stop_processing': True
-        }
-    },
-    {
         'name': 'match_google_cloud_service_account',
         'conditions': [
             {
@@ -52,7 +32,7 @@ _DEFAULT_DATA_SOURCE_RULES = [
             {
                 'key': 'provider',
                 'value': 'azure',
-                'operator': 'eq'
+                'operator': 'contain'
             }
         ],
         'conditions_policy': 'ALL',
@@ -60,6 +40,19 @@ _DEFAULT_DATA_SOURCE_RULES = [
             'match_service_account': {
                 'source': 'account',
                 'target': 'data.tenant_id'
+            }
+        },
+        'options': {
+            'stop_processing': True
+        }
+    },
+    {
+        'name': 'match_etc_service_account',
+        'conditions_policy': 'ALWAYS',
+        'actions': {
+            'match_service_account': {
+                'source': 'account',
+                'target': 'data.account_id'
             }
         },
         'options': {

@@ -39,7 +39,7 @@ _DEFAULT_DATA_SOURCE_RULES = [
         'actions': {
             'match_service_account': {
                 'source': 'account',
-                'target': 'data.tenant_id'
+                'target': 'data.subscription_id'
             }
         },
         'options': {

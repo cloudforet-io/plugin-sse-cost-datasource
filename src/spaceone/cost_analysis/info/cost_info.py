@@ -12,12 +12,12 @@ _LOGGER = logging.getLogger(__name__)
 def CostInfo(cost_data):
     try:
         info = {
-            'cost_key': cost_data.get('cost_key'),
             'cost': cost_data['cost'],
             'currency': cost_data['currency'],
             'usage_quantity': cost_data.get('usage_quantity'),
             'provider': cost_data.get('provider'),
             'region_code': cost_data.get('region_code'),
+            'category': cost_data.get('category'),
             'product': cost_data.get('product'),
             'account': cost_data.get('account'),
             'usage_type': cost_data.get('usage_type'),

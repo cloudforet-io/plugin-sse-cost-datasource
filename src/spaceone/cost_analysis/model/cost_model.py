@@ -10,6 +10,7 @@ class Cost(Model):
     usage_quantity = FloatType()
     provider = StringType(required=True)
     region_code = StringType()
+    category = StringType()
     product = StringType()
     account = StringType()
     usage_type = StringType()

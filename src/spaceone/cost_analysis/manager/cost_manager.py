@@ -40,6 +40,21 @@ class CostManager(BaseManager):
     def _make_cost_data(results):
         costs_data = []
 
+        """ Source Data Model
+        class CostSummaryItem(BaseModel):
+            usage_date: str
+            infra_type: str
+            account_id: str
+            account_name: str
+            category_name: str
+            product_service_code: str
+            product_region: str
+            resource_cost: float
+            service_id: str
+            usage_quantity: float
+            usage_type: str
+        """
+
         for result in results:
             try:
                 data = {
@@ -48,6 +63,7 @@ class CostManager(BaseManager):
                     'usage_quantity': result.get('usage_quantity', 0),
                     'provider': _PROVIDER_MAP.get(result['infra_type'], result['infra_type']),
                     'region_code': result.get('product_region'),
+                    'category': result.get('category_name'),
                     'product': result.get('product_service_code'),
                     'account': str(result['account_id']),
                     'usage_type': result.get('usage_type'),

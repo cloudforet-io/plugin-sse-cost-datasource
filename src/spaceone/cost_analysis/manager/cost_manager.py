@@ -14,7 +14,7 @@ _PROVIDER_MAP = {
     'AWS-China': 'aws_china',
     'GCP': 'google_cloud',
     'AZURE': 'azure',
-    'AZURE-China': 'azure_china',
+    'Azure-China': 'azure_china',
     'SPC': 'spc',
     'IDC': 'idc',
 }

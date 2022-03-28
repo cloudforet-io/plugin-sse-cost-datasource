@@ -47,6 +47,7 @@ class CostManager(BaseManager):
             account_id: str
             account_name: str
             category_name: str
+            sub_category_name: str
             product_service_code: str
             product_region: str
             resource_cost: float
@@ -64,6 +65,7 @@ class CostManager(BaseManager):
                     'provider': _PROVIDER_MAP.get(result['infra_type'], result['infra_type']),
                     'region_code': result.get('product_region'),
                     'category': result.get('category_name'),
+                    'resource_group': result.get('sub_category_name'),
                     'product': result.get('product_service_code'),
                     'account': str(result['account_id']),
                     'usage_type': result.get('usage_type'),
